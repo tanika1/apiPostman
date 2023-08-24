@@ -1,0 +1,385 @@
+{
+	"info": {
+		"_postman_id": "25933f2e-68fc-4ebc-a0df-460fde7af2b3",
+		"name": "CURL_Secured",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1086633",
+		"_collection_link": "https://www.postman.com/grey-zodiac-261983/workspace/api-testing/collection/29248228-25933f2e-68fc-4ebc-a0df-460fde7af2b3?action=share&source=collection_link&creator=1086633"
+	},
+	"item": [
+		{
+			"name": "List users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify if response message is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify if Content-Type is JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\",\"application/json; charset=utf-8\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify if response body is valid\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"email\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"gender\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"status\");\r",
+							"});\r",
+							"\r",
+							"//pm.test(\"Verify if server is not present in response headers\", function () {\r",
+							"  //  pm.response.to.not.have.header(\"Server\");\r",
+							"//});\r",
+							"\r",
+							"//API chaining\r",
+							"if(pm.response.code==200)\r",
+							"{\r",
+							"    console.log(pm.info.requestName+ \" API - Passed\")\r",
+							"    postman.setNextRequest(\"Create user\");\r",
+							"}\r",
+							"else{\r",
+							"    console.log(pm.info.requestName+ \" API - Failed\")\r",
+							"    postman.setNextRequest(\"\");\r",
+							"}\r",
+							"\r",
+							"console.log(\"The response code received is \" + pm.response.code + \" \" + pm.response.status);\r",
+							"console.log(\"The response time received is \" + pm.response.responseTime + \"ms\");\r",
+							"console.log(\"The response size received is \");\r",
+							"console.log(pm.response.size());\r",
+							"console.log(\"The response headers received are \" + pm.response.headers)\r",
+							"console.log(\"The response cookies received are \" + pm.response.cookies)\r",
+							"console.log(\"The response body received in text format \" + pm.response.text())\r",
+							"console.log(\"The response body received in json format \")\r",
+							"console.log(pm.response.json())\r",
+							"\r",
+							"pm.test(\"Verify if response body is present\", function () {\r",
+							"    pm.response.to.have.body();\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"console.log(\"The number of arrays in JSON response body is \" + jsonData.length)\r",
+							"\r",
+							"ResExtracted = pm.response.text();\r",
+							"var countOfGendersOccurance = (ResExtracted.match(/male/g) || []).length;\r",
+							"console.log(\"The number if occurances are \" +countOfGendersOccurance);\r",
+							"\r",
+							"//Iterations\r",
+							"console.log(\"The total iterations count is \"+pm.info.iterationCount);\r",
+							"console.log(\"The current iteration under execution is \"+pm.info.iteration);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{cToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify if response message is Created\", function () {\r",
+							"    pm.response.to.have.status(\"Created\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify if Content-Type is JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\",\"application/json; charset=utf-8\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify if response body is valid\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"email\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"gender\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"status\");\r",
+							"});\r",
+							"\r",
+							"//pm.test(\"Verify if server is not present in response headers\", function () {\r",
+							" //   pm.response.to.not.have.header(\"Server\");\r",
+							"//});\r",
+							"\r",
+							"\r",
+							"//Api Chaining\r",
+							"var jsonData = pm.response.json();\r",
+							"var extractedID = jsonData.id;\r",
+							"pm.globals.set(\"globalID\", extractedID);\r",
+							"var extractedName = jsonData.id;\r",
+							"pm.globals.set(\"globalName\", extractedName);\r",
+							"var extractedEmail = jsonData.email;\r",
+							"pm.globals.set(\"globalEmail\", extractedEmail);\r",
+							"\r",
+							"\r",
+							"if(pm.response.code==201)\r",
+							"{\r",
+							"    console.log(pm.info.requestName+ \" API - Passed\")\r",
+							"    postman.setNextRequest(\"Update user\");\r",
+							"}\r",
+							"else{\r",
+							"    console.log(pm.info.requestName+ \" API - Failed\")\r",
+							"    postman.setNextRequest(\"\");\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Verify the data type & data length in the response body\", () => {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.be.a('number');\r",
+							"    pm.expect(jsonData.gender).to.have.lengthOf(6);\r",
+							"    pm.expect((jsonData.id).toString()).to.have.lengthOf(7);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{cToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{$randomFirstName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"gender\": \"female\",\r\n    \"status\": \"active\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify if response message is OK\", function () {\r",
+							"    pm.response.to.have.status(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify if Content-Type is JSON\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\",\"application/json; charset=utf-8\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify if response body is valid\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"email\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"gender\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"status\");\r",
+							"});\r",
+							"\r",
+							"//pm.test(\"Verify if server is not present in response headers\", function () {\r",
+							" //   pm.response.to.not.have.header(\"Server\");\r",
+							"//});\r",
+							"\r",
+							"if(pm.response.code==200)\r",
+							"{\r",
+							"    console.log(pm.info.requestName+ \" API - Passed\")\r",
+							"    postman.setNextRequest(\"Delete user\");\r",
+							"}\r",
+							"else{\r",
+							"    console.log(pm.info.requestName+ \" API - Failed\")\r",
+							"    postman.setNextRequest(\"\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{cToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{$randomNamePrefix}} {{globalName}}\",\r\n    \"email\": \"{{globalEmail}}\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"active\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/{{globalID}}",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{globalID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify if response message is No Content\", function () {\r",
+							"    pm.response.to.have.status(\"No Content\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"//pm.test(\"Verify if server is not present in response headers\", function () {\r",
+							" //   pm.response.to.not.have.header(\"Server\");\r",
+							"//});\r",
+							"\r",
+							"pm.test(\"Verify if response body is empty\", function () {\r",
+							"    pm.response.to.have.body(\"\");\r",
+							"});\r",
+							"\r",
+							"if(pm.response.code==204)\r",
+							"{\r",
+							"    console.log(pm.info.requestName+ \" API - Passed\")\r",
+							"    postman.setNextRequest(\"\");\r",
+							"}\r",
+							"else{\r",
+							"    console.log(pm.info.requestName+ \" API - Failed\")\r",
+							"    postman.setNextRequest(\"List users\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{cToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://gorest.co.in/public/v2/users/{{globalID}}",
+					"protocol": "https",
+					"host": [
+						"gorest",
+						"co",
+						"in"
+					],
+					"path": [
+						"public",
+						"v2",
+						"users",
+						"{{globalID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "cToken",
+			"value": "9795bb8588b1a87ea588934bee8a6894fc4f11b8a08f4476d2b54c64aab4b3c6"
+		}
+	]
+}
